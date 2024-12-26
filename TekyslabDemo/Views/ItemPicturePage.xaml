@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TekyslabDemo.Views.ItemPicturePage"
+             BackgroundColor="#F2F2F2"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <Grid Margin="-5">
+            <Border Background="Red" HeightRequest="175" x:Name="widthrequest" StrokeShape="RoundRectangle 0,0,30,30" VerticalOptions="Start" HorizontalOptions="CenterAndExpand">
+
+
+            </Border>
+            <VerticalStackLayout BackgroundColor="Transparent">
+                <Grid ColumnDefinitions="Auto,Auto" Margin="20">
+                    <Border StrokeShape="RoundRectangle 20" HeightRequest="30" WidthRequest="30" HorizontalOptions="Start" VerticalOptions="Start" BackgroundColor="LightGray">
+                        <ImageButton Grid.Column="0" Source="backarrow.png" HeightRequest="25" WidthRequest="25" Command="{Binding BackButtonCommand}" />
+                    </Border>
+
+                    <Label Grid.Column="1" Text="Item Picture" TextColor="White" FontAttributes="Bold" Margin="20,0,0,0" FontSize="20"/>
+
+                </Grid>
+                <Border Margin="25,10,25,0" BackgroundColor="White"  StrokeShape="RoundRectangle 20" Padding="10,10">
+                  
+                    <VerticalStackLayout Spacing="10" >
+                        <Border  BackgroundColor="SkyBlue"  StrokeShape="RoundRectangle 20" >
+                            <Label Text="LAURELWOOD LEATHER CHAIR &#10; 209875654321100765433" Padding="15,10"/>
+                        </Border>
+
+                        <Image  Source="{Binding UserImage}" HeightRequest="350" WidthRequest="250" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Aspect="AspectFill" />
+                    </VerticalStackLayout>
+                       
+                </Border>
+                <Border Margin="25,10,25,0" BackgroundColor="White"  StrokeShape="RoundRectangle 20" Padding="10,10">
+                   
+                    <VerticalStackLayout Spacing="10">
+                        <Border StrokeShape="RoundRectangle 10">
+                            <Label Text="{Binding FileName}" Padding="15,10"/>
+                        </Border>
+
+                        <Button Text="Save" BackgroundColor="Red" Command="{Binding SaveImagesCommand}"/>
+                    </VerticalStackLayout>
+
+                </Border>
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

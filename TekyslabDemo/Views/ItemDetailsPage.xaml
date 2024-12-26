@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TekyslabDemo.Views.ItemDetailsPage"
+              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:TekyslabDemo.Models"
+             xmlns:bottomsheet="clr-namespace:Maui.BottomSheet;assembly=Maui.BottomSheet"
+             BackgroundColor="#F2F2F2"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Content>
+        <Grid Margin="-5">
+            <Border Background="Red" HeightRequest="175" x:Name="widthrequest" StrokeShape="RoundRectangle 0,0,30,30" VerticalOptions="Start" HorizontalOptions="CenterAndExpand">
+            </Border>
+            <VerticalStackLayout BackgroundColor="Transparent">
+                <Grid ColumnDefinitions="Auto,Auto" Margin="20">
+                    <Border StrokeShape="RoundRectangle 20" HeightRequest="30" WidthRequest="30" HorizontalOptions="Start" VerticalOptions="Start" BackgroundColor="LightGray">
+                        <Image Grid.Column="0" Source="backarrow.png" HeightRequest="25" WidthRequest="25" />
+                    </Border>
+
+                    <Label Grid.Column="1" Text="Item Details" TextColor="White" FontAttributes="Bold" Margin="20,0,0,0" FontSize="20"/>
+
+                </Grid>
+                <Border Margin="25,10,25,0" BackgroundColor="White"  StrokeShape="RoundRectangle 20" Padding="10,10">
+                    <VerticalStackLayout Spacing="10">
+                        <Border  BackgroundColor="SkyBlue" Margin="0"  StrokeShape="RoundRectangle 20" >
+                            <Label Text="LAURELWOOD LEATHER CHAIR &#10; 209875654321100765433" Padding="15,10"/>
+                        </Border>
+                        <Label Text="Select Reason" FontAttributes="Bold"/>
+                        <Border HeightRequest="40" WidthRequest="250" BackgroundColor="Transparent"  StrokeShape="RoundRectangle 20" HorizontalOptions="Start" Padding="20,0">
+                            <Grid ColumnDefinitions="*,Auto" >
+                                <Label Grid.Column="0" Text="" TextColor="White" FontAttributes="Bold" Margin="20,0,0,0" FontSize="20"/>
+                                <Image Grid.Column="1" Source="downarrow.png" HeightRequest="20" WidthRequest="20" HorizontalOptions="Start"/>
+                            </Grid>
+                        </Border>
+                        <Label Text="Capture Pictures" Margin="15,0"/>
+                        <Grid>
+
+                            <CollectionView
+                                HorizontalScrollBarVisibility="Never"
+                                x:Name="ViewItems"
+                                HorizontalOptions="Center"
+                                ItemsSource="{Binding DisplayingImages}"
+                                VerticalOptions="Center">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.EmptyView>
+                                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="0,10">
+                                        <Label Text=" "
+                                               HorizontalOptions="Center" VerticalOptions="Center"
+                                               FontAttributes="Bold"/>
+                                    </VerticalStackLayout>
+
+                                </CollectionView.EmptyView>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:DisplayImages">
+                                        <Border Margin="10,10" 
+                                       HorizontalOptions="Center"
+                                       StrokeThickness="0"
+                                       StrokeShape="RoundRectangle 10"
+                                       VerticalOptions="Center">
+                                            <VerticalStackLayout>
+                                                <Grid>
+                                                    <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="130" WidthRequest="130"/>
+                                                    <Border StrokeShape="RoundRectangle 5" StrokeThickness="0" HeightRequest="20" WidthRequest="20" Margin="0,-110,-110,0" BackgroundColor="Red">
+                                                        <Image  Source="expand.png" HeightRequest="15" WidthRequest="15">
+                                                            <Image.Behaviors>
+                                                                <toolkit:IconTintColorBehavior TintColor="White"/>
+                                                            </Image.Behaviors>
+                                                        </Image>
+                                                    </Border>
+                                                </Grid>
+                                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="5">
+                                                    <Label Grid.Column="0" FontSize="12" WidthRequest="100" LineBreakMode="TailTruncation"
+                                               Text="{Binding ImageName}"
+                                               TextColor="Black"
+                                               />
+                                                    <Border Grid.Column="1" StrokeShape="RoundRectangle 5" StrokeThickness="0"  BackgroundColor="Red" HeightRequest="20" WidthRequest="20" HorizontalOptions="End" VerticalOptions="Center" Margin="5,0">
+                                                        <Border.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding BindingContext.DeleteImageCommand, Source={x:Reference ViewItems}}"
+                                                            CommandParameter="{Binding .}"/>
+                                                        </Border.GestureRecognizers>
+                                                        <Label  Text="X" TextColor="White" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Center"/>
+
+                                                    </Border>
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <ActivityIndicator Color="Red" Margin="50"
+                    IsVisible="{Binding IsItemsLoading}"
+                    IsEnabled="{Binding IsItemsLoading}"
+                    IsRunning="{Binding IsItemsLoading}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Scale="1"/>
+                        </Grid>
+                        <HorizontalStackLayout Spacing="20" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Border StrokeShape="RoundRectangle 10" Padding=" 20,5" Background="Black">
+                                <HorizontalStackLayout Spacing="5">
+                                    <Image Source="camera.png" HeightRequest="20" WidthRequest="20">
+                                        <Image.Behaviors>
+                                            <toolkit:IconTintColorBehavior TintColor="White"/>
+                                        </Image.Behaviors>
+                                    </Image>
+                                    <Label Text="Capture" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CaptureCommand}"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+
+                            <Button Text="Submit" Background="Red" Padding="20,0" Command="{Binding SubmitCommand}"/>
+                        </HorizontalStackLayout>
+                        <bottomsheet:BottomSheet IsOpen="{Binding IsOpenBottomsheet}" HasHandle="True" Margin="0">
+
+                            <bottomsheet:BottomSheet.Peek>
+                                <bottomsheet:BottomSheetPeek>
+                                    <bottomsheet:BottomSheetPeek.PeekViewDataTemplate>
+                                        <DataTemplate>
+                                            <VerticalStackLayout Spacing="15" Padding="10">
+                                                <!-- Profile photo section -->
+                                                <Label Text="Profile Photo"
+                                                        TextColor="Black"
+                                                        FontAttributes="Bold"
+                                                        FontSize="20"
+                                                        Padding="20"/>
+                                                <!-- Grid for Camera and Gallery options -->
+                                                <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+                                                    <!-- Camera Button -->
+                                                    <Border Grid.Row="0" Grid.Column="0"
+                                                        StrokeShape="RoundRectangle 25"     
+                                                        WidthRequest="50" HeightRequest="50">
+                                                        <ImageButton Command="{Binding OpenCameraCommand}"
+                                                            VerticalOptions="Center"
+                                                            HeightRequest="30"
+                                                            WidthRequest="30"
+                                                             Source="camera.png" />
+                                                    </Border>
+                                                    <Label Grid.Row="1" Grid.Column="0" 
+                                                        Text="Camera"
+                                                        VerticalOptions="Center"
+                                                        HorizontalOptions="Center"/>
+
+                                                    <!-- Gallery Button -->
+                                                    <Border Grid.Row="0" Grid.Column="1"
+                                                            StrokeShape="RoundRectangle 25"  
+                                                            WidthRequest="50" HeightRequest="50">
+                                                        <ImageButton Command="{Binding OpenGalleryCommand}"
+                                                                 VerticalOptions="Center"
+                                                                 HeightRequest="30"
+                                                                 WidthRequest="30"
+                                                                 Source="gallery.png" />
+                                                    </Border>
+                                                    <Label Grid.Row="1" Grid.Column="1" 
+                                                            Text="Gallery"
+                                                            VerticalOptions="Center"
+                                                            HorizontalOptions="Center"/>
+                                                </Grid>
+                                            </VerticalStackLayout>
+                                        </DataTemplate>
+                                    </bottomsheet:BottomSheetPeek.PeekViewDataTemplate>
+                                </bottomsheet:BottomSheetPeek>
+                            </bottomsheet:BottomSheet.Peek>
+                        </bottomsheet:BottomSheet>
+
+                    </VerticalStackLayout>
+
+                </Border>
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>
